@@ -26,7 +26,7 @@ ARG ARG_APP_UPDATE=manual
 ARG ARG_BUILD_DATE
 
 # ShinobiPro branch, defaults to dev
-ARG APP_BRANCH=dev
+ARG ARG_APP_BRANCH=dev
 
 # Additional Node JS packages for Shinobi plugins, addons, etc.
 ARG ARG_ADD_NODEJS_PACKAGES="mqtt"
@@ -34,7 +34,13 @@ ARG ARG_ADD_NODEJS_PACKAGES="mqtt"
 # Define Node.js version to use (Issue #20: Ubuntu based images fail build caused by sqlite3 `node-pre-gyp`)
 ARG ARG_NODEJS_VERSION_FULL="12.14.1"
 
-ENV DB_USER=majesticflame \
+ENV APP_VERSION=$ARG_APP_VERSION \
+    APP_CHANNEL=$ARG_APP_CHANNEL \
+    APP_COMMIT=$ARG_APP_COMMIT \
+    APP_UPDATE=$ARG_APP_UPDATE \
+    APP_BRANCH=${ARG_APP_BRANCH} \
+    APP_IMAGE_VERSION=${ARG_IMAGE_VERSION} \
+    DB_USER=majesticflame \
     DB_PASSWORD='' \
     DB_HOST='localhost' \
     DB_DATABASE=ccio \
@@ -141,7 +147,7 @@ RUN npm install -g n \
 WORKDIR /home/Shinobi
 
 # Install Shinobi app including NodeJS dependencies
-RUN git clone -b ${APP_BRANCH} https://gitlab.com/Shinobi-Systems/Shinobi.git /home/Shinobi/
+RUN git clone -b ${ARG_APP_BRANCH} https://gitlab.com/Shinobi-Systems/Shinobi.git /home/Shinobi/
 RUN npm install sqlite3 --unsafe-perm
 RUN npm install jsonfile edit-json-file ${ARG_ADD_NODEJS_PACKAGES}
 RUN npm install --unsafe-perm
