@@ -1,4 +1,6 @@
-ARG ARG_CUDA_TAG="10.2-cudnn7-devel-ubuntu18.04"
+# ARG ARG_CUDA_TAG="10.2-cudnn7-devel-ubuntu18.04"
+ARG ARG_CUDA_TAG="11.2.0-cudnn8-devel-ubuntu20.04"
+
 
 FROM nvidia/cuda:${ARG_CUDA_TAG}
 #FROM node:12.21.0-buster-slim
